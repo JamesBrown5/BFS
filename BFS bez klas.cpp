@@ -69,12 +69,19 @@ int main()
 {
     vector<vector<unsigned int>> graph1;
     vector<vector<unsigned int>> graph2;
+    vector<int> output1, output2; 
 
     if (!load_graph(graph1, "input1.txt") or !load_graph(graph2, "input2.txt"))
         return 0;
 
-    vector<int> output1, output2;
-    unsigned int start = 3;
+    unsigned int start;
+    cout << "Upewnij sie, ze podales dane we wlasciwym formacie [patrz komentarz na dole kodu] \n" << endl;
+    cout << "Podaj poczatkowy wierzcholek, od ktorego zacznie sie wykonywac algorytm BFS: ";
+    do 
+    {
+        cin >> start;
+    } while (start >= graph1.size() or start >= graph2.size() or start < 0);
+
 
     thread thread1([&graph1, start, &output1]() { output1 = bfs(graph1, start, 1); });
     thread thread2([&graph2, start, &output2]() { output2 = bfs(graph2, start, 2); });
@@ -91,3 +98,13 @@ int main()
     return 0;
 
 }
+/*
+Dane wejsciowe podajemy wedle nastepujacego schematu:
+    liczba wierzcholkow     liczba krawedzi
+    wierzcholek1    wierzcholek2
+    wierzcholek1    wierzcholek2
+    wierzcholek1    wierzcholek2 <--- polaczone ze soba wierzcholki [graf nieskierowany, czyli podajac 1 0,
+              itd...                          automatycznie dodajemy do grafu polaczenie 0 1]
+    
+    
+*/
